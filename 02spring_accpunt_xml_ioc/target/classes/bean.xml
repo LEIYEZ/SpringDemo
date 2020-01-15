@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 配置业务层对象-->
+    <bean id="accountService" class="cn.imut.service.impl.AccountServiceImpl">
+        <!-- 注入mapper对象-->
+        <property name="accountMapper" ref="accountMapper"/>
+    </bean>
+
+    <!-- 配置mapper对象-->
+    <bean id="accountMapper" class="cn.imut.mapper.impl.AccountMapperImpl">
+        <!-- 注入QueryRunner对象-->
+        <property name="runner" ref="runner"/>
+    </bean>
+
+    <!-- 配置QueryRunner prototype 多例对象-->
+    <bean id="runner" class="org.apache.commons.dbutils.QueryRunner" scope="prototype">
+        <!-- 注入数据源-->
+        <constructor-arg name="ds" ref="dataSource"/>
+    </bean>
+
+    <!-- 配置数据源-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <!-- 链接数据库的必备信息-->
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/zl?useSSL=true"/>
+        <property name="user" value="root"/>
+        <property name="password" value="1870535196"/>
+    </bean>
+</beans>

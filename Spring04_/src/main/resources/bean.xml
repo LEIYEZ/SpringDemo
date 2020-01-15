@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 把对象的创建交给spring来创建-->
+    <!-- id： 获取标识   class：反射获取的全限定类名-->
+    <!-- spring对bean的管理细节
+            1.创建bean的三种方式：
+            2.bean对象的作用范围
+            3.bean对象的生命周期
+    -->
+    <!-- 创建bean的三种方式-->
+    <!-- 1.默认构造函数创建
+            在spring配置文件中，使用bean标签配以id和class属性之后，且没有其他属性和标签时。
+            采用的就是默认构造函数创建bean对象，此时如果类中没有默认构造函数，则对象无法创建。
+    -->
+<!--    <bean id="accountService" class="cn.imut.service.impl.AccountServiceImpl"/>-->
+    <!-- 2.使用普通工程中的方法创建对象(使用某个类中的方法创建对象，并存入spring容器)-->
+<!--    <bean id="instanceFactory" class="cn.imut.factory.InstanceFactory"/>-->
+<!--    <bean id="accountService" factory-bean="instanceFactory" factory-method="getAccountService"/>-->
+    <!-- 3.使用静态方法创建对象，并存入spring容器-->
+    <bean id="accountService" class="cn.imut.factory.StaticFactory" factory-method="getAccountService"/>
+
+    <!-- bean的作用范围调整
+        bean标签的scope属性：
+            作用：用于指定bean作用范围
+            取值：
+                singleton：单例(默认)
+                prototype：多例
+                request：作用于web应用的请求范围
+                session：作用于web应用的会话范围
+                global-session：作用于集群环境的会话范围(全局会话)
+    -->
+
+    <!-- bean的生命周期
+            1.单例对象
+                出生：当容器创建时，对象出生  init-method
+                活着：容器存在，对象就活着
+                死亡：容器销毁，对象死亡     destroy-method
+                总结：单例对象的生命周期和容器相同
+            2.多例对象
+                出生：使用对象时spring框架为我们创建
+                活着：对象使用中
+                死亡：当对象长时间不用时，且没有别的对象引用时，由java的垃圾回收器回收
+    -->
+</beans>
